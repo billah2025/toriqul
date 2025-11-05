@@ -22,11 +22,11 @@ const GraveGrid: React.FC = () => {
   useEffect(() => {
     const fetchGraves = async () => {
       try {
-        const resAll = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/graves`);
+        const resAll = await fetch(`https://cemeteryapi.onrender.com/api/graves`);
         const allData: string[] = await resAll.json();
         setAllGraves(allData);
 
-        const resUsed = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`);
+        const resUsed = await fetch(`https://cemeteryapi.onrender.com/api/cemetery`);
         const cemeteryData: CemeteryRecord[] = await resUsed.json();
         setUsedGraves(cemeteryData);
       } catch (error) {

@@ -43,7 +43,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
         formData.append("file", image);
 
         const uploadRes = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+          `https://cemeteryapi.onrender.com/api/upload`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );

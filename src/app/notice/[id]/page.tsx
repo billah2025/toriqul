@@ -24,14 +24,14 @@ const NoticeDetailPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resAll = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`);
+        const resAll = await axios.get(`https://cemeteryapi.onrender.com/api/notices`);
         const sorted = resAll.data.sort(
           (a: Notice, b: Notice) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
         setNotices(sorted);
 
         if (id) {
-          const resNotice = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/notices/${id}`);
+          const resNotice = await axios.get(`https://cemeteryapi.onrender.com/api/notices/${id}`);
           setNotice(resNotice.data);
         }
       } catch (err) {

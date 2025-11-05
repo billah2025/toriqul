@@ -21,7 +21,7 @@ const NoticesPage = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`);
+        const res = await axios.get(`https://cemeteryapi.onrender.com/api/notices`);
         const sorted = res.data.sort(
           (a: Notice, b: Notice) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
