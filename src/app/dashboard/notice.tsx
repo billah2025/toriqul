@@ -43,7 +43,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
         formData.append("file", image);
 
         const uploadRes = await axios.post(
-          "http://localhost:5000/api/upload",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
           formData,
           { headers: { "Content-Type": "multipart/form-data" } }
         );
@@ -53,7 +53,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
 
       // If notice exists → update
       if (notice) {
-        await axios.put(`http://localhost:5000/api/notices/${notice._id}`, {
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/notices/${notice._id}`, {
           title,
           description,
           date,
@@ -63,7 +63,7 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
         setMessage("Notice/Event updated successfully!");
       } else {
         // Create new notice
-        await axios.post("http://localhost:5000/api/notices", {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`, {
           title,
           description,
           date,

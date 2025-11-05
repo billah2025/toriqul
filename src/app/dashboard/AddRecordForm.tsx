@@ -32,11 +32,11 @@ export default function AddRecordForm({ onAdd, onClose }: Props) {
     const fetchUnusedGraves = async () => {
       try {
         // 1️⃣ Fetch all possible grave numbers (or load from file/backend)
-        const allGravesRes = await fetch("http://localhost:5000/api/graves");
+        const allGravesRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/graves`);
         const allGraves: string[] = await allGravesRes.json();
 
         // 2️⃣ Fetch all used graves
-        const usedRes = await fetch("http://localhost:5000/api/cemetery");
+        const usedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`);
         const usedData = await usedRes.json();
         const usedGraves = usedData.map((r: any) => r.graveNumber);
 
@@ -69,7 +69,7 @@ export default function AddRecordForm({ onAdd, onClose }: Props) {
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
-      const uploadRes = await fetch("http://localhost:5000/api/upload", {
+      const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -77,7 +77,7 @@ export default function AddRecordForm({ onAdd, onClose }: Props) {
       imageUrl = uploadData.url;
     }
 
-    const res = await fetch("http://localhost:5000/api/cemetery", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

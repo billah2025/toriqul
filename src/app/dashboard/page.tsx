@@ -41,7 +41,7 @@ export default function DashboardPage() {
   const fetchRecords = async () => {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/cemetery");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`);
       const data: CemeteryRecord[] = await res.json();
       setRecords(data);
     } catch (err) {
@@ -54,7 +54,7 @@ export default function DashboardPage() {
   // Fetch all notices/events
   const fetchNotices = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/notices");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`);
       const data = await res.json();
       setNotices(data);
     } catch (err) {
@@ -75,7 +75,7 @@ export default function DashboardPage() {
     if (!confirm("Are you sure you want to delete this record?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/cemetery/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -94,7 +94,7 @@ export default function DashboardPage() {
     if (!confirm("Are you sure you want to delete this notice/event?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/notices/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notices/${id}`, {
         method: "DELETE",
       });
       if (res.ok) fetchNotices();

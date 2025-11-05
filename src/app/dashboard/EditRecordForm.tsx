@@ -80,7 +80,7 @@ export default function EditRecordForm({ record, onClose, onUpdate }: Props) {
     if (image) {
       const formData = new FormData();
       formData.append("file", image);
-      const uploadRes = await fetch("http://localhost:5000/api/upload", {
+      const uploadRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -89,7 +89,7 @@ export default function EditRecordForm({ record, onClose, onUpdate }: Props) {
     }
 
     const res = await fetch(
-      `http://localhost:5000/api/cemetery/${record._id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/cemetery/${record._id}`,
       {
         method: "PUT",
         headers: {

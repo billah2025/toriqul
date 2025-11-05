@@ -41,7 +41,7 @@ const GraveDetailPage = () => {
   useEffect(() => {
     const fetchGrave = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/cemetery/${id}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery/${id}`);
         const data = await res.json();
         setGrave(data);
       } catch (err) {
