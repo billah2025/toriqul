@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import RichTextEditor from "@/app/componants/richtexteditor";
+ 
 
 
 interface NoticeFormProps {
