@@ -23,7 +23,8 @@ const ContactForm = () => {
             className="space-y-4"
           >
             <input type="hidden" name="_captcha" value="false"  />
-   <input type="hidden" name="_template" value="table"/>
+            <input type="hidden" name="_template" value="table"/>
+            <input type="hidden" name="_next" value="https://cemeteryapi.onrender.com/thankyou" />
             <div className="flex flex-col">
               <label htmlFor="name" className="text-green-900 font-medium mb-1">Full Name</label>
               <input

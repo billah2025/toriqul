@@ -4,7 +4,7 @@ import Image from "next/image";
 import Location from "@/app/componants/location";
 import ContactForm from "@/app/componants/contact";
 import FindLovedOneSection from "@/app/componants/findlovedone";
-import NewsletterForm from "@/app/componants/footer";
+
 import CemeteryStats from "@/app/componants/statics";
 import GraveGrid from "@/app/componants/map";
 import NoticeCards from "./componants/Noticecard";
