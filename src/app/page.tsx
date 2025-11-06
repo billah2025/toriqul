@@ -20,7 +20,6 @@ export default function Home() {
     <HistoricalBackground />
     <Location />
     <ContactForm />
-    <NewsletterForm />
    
    
     </div>

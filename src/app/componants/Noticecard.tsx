@@ -18,7 +18,11 @@ const NoticesPage = () => {
   useEffect(() => {
     const fetchNotices = async () => {
       try {
-        const res = await fetch(`https://cemeteryapi.onrender.com/api/notices`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
         const data = await res.json();
         data.sort(
           (a: any, b: any) =>

@@ -23,7 +23,11 @@ export default function FindLovedOneSection() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch(`https://cemeteryapi.onrender.com/api/cemetery`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
         const data = await res.json();
         setRecords(data);
       } catch (error) {

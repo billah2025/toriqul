@@ -32,11 +32,19 @@ export default function AddRecordForm({ onAdd, onClose }: Props) {
     const fetchUnusedGraves = async () => {
       try {
         // 1️⃣ Fetch all possible grave numbers (or load from file/backend)
-        const allGravesRes = await fetch(`https://cemeteryapi.onrender.com/api/graves`);
+        const allGravesRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
         const allGraves: string[] = await allGravesRes.json();
 
         // 2️⃣ Fetch all used graves
-        const usedRes = await fetch(`https://cemeteryapi.onrender.com/api/cemetery`);
+        const usedRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
         const usedData = await usedRes.json();
         const usedGraves = usedData.map((r: any) => r.graveNumber);
 

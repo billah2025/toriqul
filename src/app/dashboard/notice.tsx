@@ -43,9 +43,10 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
         formData.append("file", image);
 
         const uploadRes = await axios.post(
-          `https://cemeteryapi.onrender.com/api/upload`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
           formData,
-          { headers: { "Content-Type": "multipart/form-data" } }
+          { headers: { "Content-Type": "multipart/form-data",
+             "x-api-key": process.env.NEXT_PUBLIC_API_KEY! } }
         );
 
         imageUrl = uploadRes.data.url;
@@ -53,23 +54,41 @@ const NoticeForm: React.FC<NoticeFormProps> = ({ notice, onUpdate }) => {
 
       // If notice exists → update
       if (notice) {
-        await axios.put(`https://cemeteryapi.onrender.com/api/notices/${notice._id}`, {
+        await axios.put(`${process.env.NEXT_PUBLIC_API_URL}/api/notices/${notice._id}`, {
           title,
           description,
           date,
           type,
           image: imageUrl,
-        });
+        }
+      ,
+    {
+      headers: {
+        "x-api-key": process.env.NEXT_PUBLIC_API_KEY!, // ✅ Secure your request
+      },
+    }
+      
+      
+      );
         setMessage("Notice/Event updated successfully!");
       } else {
         // Create new notice
-        await axios.post(`https://cemeteryapi.onrender.com/api/notices`, {
+        await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/notices`, {
           title,
           description,
           date,
           type,
           image: imageUrl,
-        });
+        },
+        {
+      headers: {
+        "x-api-key": process.env.NEXT_PUBLIC_API_KEY!, // ✅ Secure your request
+      },
+    }
+      
+      
+      
+      );
         setMessage("Notice/Event created successfully!");
         // Reset form only if creating new
         setTitle("");

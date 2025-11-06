@@ -41,7 +41,13 @@ export default function DashboardPage() {
   const fetchRecords = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`https://cemeteryapi.onrender.com/api/cemetery`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
+
+        
       const data: CemeteryRecord[] = await res.json();
       setRecords(data);
     } catch (err) {
@@ -54,7 +60,13 @@ export default function DashboardPage() {
   // Fetch all notices/events
   const fetchNotices = async () => {
     try {
-      const res = await fetch(`https://cemeteryapi.onrender.com/api/notices`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cemetery`, {
+          headers: {
+            "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+          },
+        });
+
+
       const data = await res.json();
       setNotices(data);
     } catch (err) {

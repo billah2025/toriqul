@@ -4,7 +4,7 @@ const Location: React.FC = () => {
   // Replace with your actual Google Maps embed URL
   // You can get this by going to Google Maps, searching for a location,
   // clicking 'Share', then 'Embed a map', and copying the src attribute from the iframe.
-  const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.787702167527!2d144.9620022153198!3d-37.81710997975199!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642b5826f4f13%3A0x6d8b0e11e0f0d2c0!2sFederation%20Square!5e0!3m2!1sen!2sau!4v1678888888888!5m2!1sen!2sau";
+  const googleMapsEmbedUrl = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d466.5197122086118!2d90.7200709637688!3d23.954655370415527!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x37542f005da99d11%3A0xbd1cac7a7d511b62!2z4Ka24Ka-4Ka54Kaq4KeB4KawIOCmquCmvuCmn-CngeCnn-CmvuCmsOCmquCmvuCnnCDgpqvgp4Hgpp_gpqzgprIg4Kau4Ka-4Kag!5e1!3m2!1sen!2sbd!4v1762361070583!5m2!1sen!2sbd";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 text-gray-800 font-sans">

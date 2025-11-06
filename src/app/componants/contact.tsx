@@ -18,7 +18,7 @@ const ContactForm = () => {
         {/* Form Section */}
         <div className="md:w-1/2 p-10">
           <form
-            action="https://formsubmit.co/your-email@example.com"
+            action="https://formsubmit.co/m.b.siam2008@gmail.com"
             method="POST"
             className="space-y-4"
           >

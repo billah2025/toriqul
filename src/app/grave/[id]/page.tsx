@@ -8,18 +8,16 @@ import {
   User,
   BookOpen,
   Users,
-  Heart,
-  Globe,
   ArrowLeft,
 } from "lucide-react";
 
 interface Grave {
   _id: string;
-  name: string;
+  name?: string;
   address?: string;
   age?: number;
-  birthDate?: string;
-  deathDate?: string;
+  birthDate?: string | null;
+  deathDate?: string | null;
   isNative?: boolean;
   fatherName?: string;
   motherName?: string;
@@ -29,9 +27,20 @@ interface Grave {
   gender?: string;
   whereDied?: string;
   description?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: string | null;
+  updatedAt?: string | null;
 }
+
+const formatDateOrUnknown = (date?: string | null) => {
+  if (!date) return "Unknown";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "Unknown";
+  return d.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+};
 
 const GraveDetailPage = () => {
   const { id } = useParams();
@@ -40,25 +49,37 @@ const GraveDetailPage = () => {
 
   useEffect(() => {
     const fetchGrave = async () => {
+      if (!id) return;
       try {
-        const res = await fetch(`https://cemeteryapi.onrender.com/api/cemetery/${id}`);
-        const data = await res.json();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL!}/api/cemetery/${id}`,
+          {
+            headers: {
+              "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
+            },
+          }
+        );
+
+        if (!res.ok) {
+          throw new Error(`Failed to fetch: ${res.status}`);
+        }
+
+        const data: Grave = await res.json();
         setGrave(data);
       } catch (err) {
         console.error("Failed to fetch grave details:", err);
+        setGrave(null);
       } finally {
         setLoading(false);
       }
     };
-    if (id) fetchGrave();
+    fetchGrave();
   }, [id]);
 
   if (loading)
     return (
       <div className="min-h-screen flex justify-center items-center bg-emerald-50">
-        <p className="text-green-800 text-lg animate-pulse">
-          Loading details...
-        </p>
+        <p className="text-green-800 text-lg animate-pulse">Loading details...</p>
       </div>
     );
 
@@ -88,12 +109,12 @@ const GraveDetailPage = () => {
                 ? grave.image
                 : "https://cdn-icons-png.flaticon.com/512/4139/4139981.png"
             }
-            alt={grave.name}
+            alt={grave.name || "No name"}
             className="w-48 h-48 object-cover rounded-xl shadow-md border border-green-100"
           />
           <div className="text-left">
             <h1 className="text-3xl font-bold text-green-900 mb-2">
-              {grave.name}
+              {grave.name || "Unknown"}
             </h1>
             <p className="text-green-800 flex items-center gap-2 mb-1">
               <MapPin size={18} className="text-amber-500" />
@@ -101,25 +122,11 @@ const GraveDetailPage = () => {
             </p>
             <p className="text-green-800 flex items-center gap-2 mb-1">
               <Calendar size={18} className="text-amber-500" />
-              Date of Birth:{" "}
-              {grave.birthDate
-                ? new Date(grave.birthDate).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : "Unknown"}
+              Date of Birth: {formatDateOrUnknown(grave.birthDate)}
             </p>
             <p className="text-green-800 flex items-center gap-2 mb-1">
               <Calendar size={18} className="text-amber-500" />
-              Date of Passing:{" "}
-              {grave.deathDate
-                ? new Date(grave.deathDate).toLocaleDateString("en-GB", {
-                    day: "numeric",
-                    month: "long",
-                    year: "numeric",
-                  })
-                : "Unknown"}
+              Date of Passing: {formatDateOrUnknown(grave.deathDate)}
             </p>
           </div>
         </div>
@@ -163,9 +170,7 @@ const GraveDetailPage = () => {
               <BookOpen size={18} className="text-amber-600" />
               Description
             </h3>
-            <p className="text-green-800 leading-relaxed">
-              {grave.description}
-            </p>
+            <p className="text-green-800 leading-relaxed">{grave.description}</p>
           </div>
         )}
 
@@ -174,9 +179,9 @@ const GraveDetailPage = () => {
           <p>“May Allah forgive their sins and grant them Jannatul Firdaus.”</p>
           <p className="text-xs mt-2">
             Record created on{" "}
-            {new Date(grave.createdAt || "").toLocaleDateString("en-GB")} and
-            last updated on{" "}
-            {new Date(grave.updatedAt || "").toLocaleDateString("en-GB")}
+            {grave.createdAt ? formatDateOrUnknown(grave.createdAt) : "Unknown"}{" "}
+            and last updated on{" "}
+            {grave.updatedAt ? formatDateOrUnknown(grave.updatedAt) : "Unknown"}
           </p>
         </div>
       </div>
