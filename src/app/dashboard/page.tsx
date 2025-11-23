@@ -2,9 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { saveAs } from "file-saver";
+// import { saveAs } from "file-saver";
 import * as XLSX from "xlsx";
 import { jsPDF } from "jspdf";
+const downloadFile = (blob: Blob, fileName: string) => {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+};
 
 /**
  * Full-featured Printing Dashboard (Option B)
@@ -360,7 +368,7 @@ const generateInvoicePDF = (r: PrintRecord) => {
 
       // Add clickable link
       const linkText = "Developed by Motasim Billah Siam";
-      const linkUrl = "https://facebook.com/motasim.siam"; // change if needed
+      const linkUrl = "https://facebook.com/"; // change if needed
 
       doc.textWithLink(linkText, pageWidth / 2, footerY, {
         url: linkUrl,
@@ -428,7 +436,7 @@ const generateInvoicePDF = (r: PrintRecord) => {
   XLSX.utils.book_append_sheet(wb, ws, "prints");
   const wbout = XLSX.write(wb, { bookType: "xlsx", type: "array" });
   const blob = new Blob([wbout], { type: "application/octet-stream" });
-  saveAs(blob, `prints_${new Date().toISOString().slice(0, 10)}.xlsx`);
+  downloadFile(blob,`prints_${new Date().toISOString().slice(0, 10)}.xlsx`);
 };
 
   // Import Excel (reads first sheet, expects headers that match fields)
