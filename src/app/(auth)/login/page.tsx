@@ -14,7 +14,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch(`https://cemeteryapi.onrender.com/api/auth/login`, {
+      const res = await fetch(`https://printapi-godr.onrender.com/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" ,
           "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,

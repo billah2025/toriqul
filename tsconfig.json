@@ -37,6 +37,8 @@
   ],
   "exclude": [
     "node_modules",
-    ".next"
+    ".next",
+    "src/app/community/page.tsx",
+    "src/app/dashboard/CemeteryStats.tsx"
   ]
 }
