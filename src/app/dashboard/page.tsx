@@ -749,6 +749,7 @@ setEmail("");
                   <input
                     className="w-full p-2 border rounded mt-1"
                     type="number"
+                    step="any"
                     min={0}
                     value={totalPages}
                     onChange={(e) => setTotalPages(Number(e.target.value))}
@@ -759,6 +760,7 @@ setEmail("");
                   <label className="block text-sm">Charge / Page</label>
                   <input
                     className="w-full p-2 border rounded mt-1"
+                    step="any"
                     type="number"
                     min={0}
                     value={chargePerPage}
@@ -771,6 +773,7 @@ setEmail("");
                   <input
                     className="w-full p-2 border rounded mt-1"
                     type="number"
+                    step="any"
                     min={0}
                     value={costPerPage}
                     onChange={(e) => setCostPerPage(Number(e.target.value))}
