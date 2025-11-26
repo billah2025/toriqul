@@ -91,10 +91,13 @@ export default function DashboardPage() {
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${API_URL}/api/prints`, {
+      const userId = localStorage.getItem("userId");
+
+const res = await fetch(`${API_URL}/api/prints?userId=${userId}`, {
         headers: {
           "x-api-key": API_KEY,
-          Authorization: `Bearer ${token}`,
+    "Content-Type": "application/json", 
+     Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       if (!res.ok) {
@@ -104,7 +107,8 @@ export default function DashboardPage() {
           router.push("/login");
           return;
         }
-        throw new Error("Failed to fetch");
+ throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`);
+
       }
       const data = await res.json();
       setRecords(data);
@@ -161,7 +165,8 @@ export default function DashboardPage() {
           headers: {
             // upload route in your backend might not require api-key; include if required
             "x-api-key": API_KEY,
-            Authorization: `Bearer ${token}`,
+           
+           Authorization: `Bearer ${localStorage.getItem("token")}`
           } as any,
         });
         if (!upl.ok) throw new Error("Upload failed");
@@ -205,7 +210,8 @@ const payload = {
         headers: {
           "Content-Type": "application/json",
           "x-api-key": API_KEY,
-          Authorization: `Bearer ${token}`,
+          // Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(payload),
       });
@@ -237,7 +243,9 @@ const payload = {
       method: "DELETE",
       headers: {
         "x-api-key": API_KEY,
-        Authorization: `Bearer ${token}`,
+        // Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",  
+        Authorization: `Bearer ${localStorage.getItem("token")}`
       },
     });
     if (!res.ok) {
@@ -471,15 +479,17 @@ const generateInvoicePDF = (r: PrintRecord) => {
         image: row.image || row.Image || "",
       };
 
-      await fetch(`${API_URL}/api/prints`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-api-key": API_KEY,
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(payload),
-      });
+    const userId = localStorage.getItem("userId");
+
+await fetch(`${API_URL}/prints`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" ,
+     Authorization: `Bearer ${localStorage.getItem("token")}`
+
+  },
+  body: JSON.stringify({ ...payload, userId }),
+});
+
     }
     alert("Import finished (rows posted). Refreshing list.");
     await fetchRecords();

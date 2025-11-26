@@ -14,7 +14,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch(`https://printapi-godr.onrender.com/api/auth/login`, {
+      const res = await fetch(`http://localhost:5000/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" ,
           "x-api-key": process.env.NEXT_PUBLIC_API_KEY!,
@@ -31,6 +31,7 @@ export default function LoginPage() {
 
       // Store JWT token in localStorage
       localStorage.setItem("token", data.token);
+localStorage.setItem("userId", data.user.id);
 
       // Redirect to dashboard or homepage
       router.push("/dashboard");
